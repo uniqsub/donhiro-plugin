@@ -88,153 +88,128 @@
             }
         });
         
-        // 制覇状況を見やすく表示
+                // ========================================
+        // 制覇までの残り譜面数
+        // ========================================
+
+        // 全良制覇までの残り
+        // = フルコン + クリア + ノルマ落ち + 未プレイ
+        var remainingDonderFull =
+            countGold + countSilver + countPlayed + countNone;
+
+        // フルコン制覇までの残り
+        // = クリア + ノルマ落ち + 未プレイ
+        var remainingFullCombo =
+            countSilver + countPlayed + countNone;
+
+
+        // ========================================
+        // 表示
+        // ========================================
+
+        var remainingHtml = `
+            <div class="hiroba-progress">
+                おに譜面制覇まであと
+                <span class="hiroba-count hiroba-rainbow">
+                    ${remainingDonderFull}譜面
+                </span>
+            </div>`;
+
+        var remainingHtml_gold = `
+            <div class="hiroba-progress">
+                おに譜面フルコン制覇まであと
+                <span class="hiroba-count hiroba-gold">
+                    ${remainingFullCombo}譜面
+                </span>
+            </div>`;
+
+
+        // ========================================
+        // CSS
+        // ========================================
+
+        if (!document.getElementById('hiroba-progress-style')) {
+            $('head').append(`
+                <style id="hiroba-progress-style">
+
+                    .hiroba-progress {
+                        margin: 8px 10px;
+                        padding: 8px 12px;
+                        background: #fff;
+                        color: #333;
+                        font-weight: bold;
+                        font-size: 14px;
+                        line-height: 1.5;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                    }
+
+                    .hiroba-count {
+                        margin-left: 4px;
+                        font-weight: bold;
+                    }
+
+
+                    /* ==================================
+                       おに譜面制覇：流れる虹色
+                       ================================== */
+
+                    .hiroba-rainbow {
+                        background: linear-gradient(
+                            90deg,
+                            #ff3b30,
+                            #ff9500,
+                            #ffd60a,
+                            #34c759,
+                            #0a84ff,
+                            #5856d6,
+                            #af52de,
+                            #ff3b30
+                        );
+
+                        background-size: 300% 100%;
+
+                        -webkit-background-clip: text;
+                        background-clip: text;
+
+                        -webkit-text-fill-color: transparent;
+
+                        animation:
+                            hiroba-rainbow-flow
+                            3s linear infinite;
+                    }
+
+
+                    @keyframes hiroba-rainbow-flow {
+                        0% {
+                            background-position: 0% 50%;
+                        }
+
+                        100% {
+                            background-position: 300% 50%;
+                        }
+                    }
 
-// ・おに譜面フルコン制覇 = 金色
 
-// ・おに譜面制覇 = 虹色
+                    /* ==================================
+                       おに譜面フルコン制覇：金色
+                       ================================== */
 
-var remainingHtml = `
+                    .hiroba-gold {
+                        color: #d49a00;
+                    }
 
-    <div class="hiroba-progress hiroba-progress-rainbow">
+                </style>
+            `);
+        }
 
-        <span class="hiroba-progress-title">おに譜面制覇</span>
 
-        <span class="hiroba-progress-count">あと ${countGold + countSilver + countPlayed + countNone} 譜面</span>
+        // ========================================
+        // tabListに追加
+        // ========================================
 
-    </div>`;
-
-var remainingHtml_gold = `
-
-    <div class="hiroba-progress hiroba-progress-gold">
-
-        <span class="hiroba-progress-title">おに譜面フルコン制覇</span>
-
-        <span class="hiroba-progress-count">あと ${countSilver + countPlayed + countNone} 譜面</span>
-
-    </div>`;
-
-// このページだけで使うCSSを追加
-
-if (!document.getElementById('hiroba-progress-style')) {
-
-    $('head').append(`
-
-        <style id="hiroba-progress-style">
-
-            .hiroba-progress {
-
-                margin: 8px 10px;
-
-                padding: 10px 14px;
-
-                border-radius: 8px;
-
-                color: #fff;
-
-                font-weight: bold;
-
-                text-align: center;
-
-                line-height: 1.45;
-
-                text-shadow:
-
-                    0 1px 2px rgba(0,0,0,.8),
-
-                    0 0 4px rgba(0,0,0,.45);
-
-                box-shadow:
-
-                    0 2px 5px rgba(0,0,0,.35),
-
-                    inset 0 1px 0 rgba(255,255,255,.35);
-
-                border: 1px solid rgba(255,255,255,.35);
-
-            }
-
-            .hiroba-progress-title {
-
-                display: block;
-
-                font-size: 14px;
-
-            }
-
-            .hiroba-progress-count {
-
-                display: block;
-
-                margin-top: 2px;
-
-                font-size: 13px;
-
-            }
-
-            /* フルコン制覇：金 */
-
-            .hiroba-progress-gold {
-
-                background:
-
-                    linear-gradient(
-
-                        135deg,
-
-                        #8a5a00 0%,
-
-                        #d99a00 22%,
-
-                        #ffe27a 48%,
-
-                        #d99a00 72%,
-
-                        #8a5a00 100%
-
-                    );
-
-            }
-
-            /* おに譜面制覇：虹 */
-
-            .hiroba-progress-rainbow {
-
-                background:
-
-                    linear-gradient(
-
-                        110deg,
-
-                        #ff3b30 0%,
-
-                        #ff9500 16%,
-
-                        #ffd60a 30%,
-
-                        #34c759 45%,
-
-                        #0a84ff 62%,
-
-                        #5856d6 78%,
-
-                        #af52de 90%,
-
-                        #ff375f 100%
-
-                    );
-
-            }
-
-        </style>
-
-    `);
-
-}
-
-$('.tabList').append(remainingHtml);
-
-$('.tabList').append(remainingHtml_gold);
+        $('.tabList').append(remainingHtml);
+        $('.tabList').append(remainingHtml_gold);
         
         function crownFilter(crown){
             $(".contentBox").each(function( index){
