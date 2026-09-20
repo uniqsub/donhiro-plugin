@@ -81,79 +81,83 @@
             $('head').append(`
                 <style id="hiroba-filter-style">
 
-                    .hiroba-crown-filter {
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
+                  .hiroba-crown-filter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-                        margin: 3px;
-                        padding: 7px 13px;
+    box-sizing: border-box;
 
-                        min-height: 38px;
+    margin: 1px;
+    padding: 3px 7px;
 
-                        background: #ffffff;
-                        border: 1px solid #d5d5d5;
-                        border-radius: 20px;
+    min-height: 26px;
 
-                        color: #555;
-                        font-size: 15px;
-                        font-weight: bold;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 13px;
 
-                        box-shadow: 0 2px 4px rgba(0,0,0,.15);
+    color: #555;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 1.2;
 
-                        cursor: pointer;
+    white-space: nowrap;
 
-                        transition:
-                            transform .1s ease,
-                            box-shadow .1s ease,
-                            background .1s ease;
-                    }
+    box-shadow: 0 1px 2px rgba(0,0,0,.12);
 
-                    .hiroba-crown-filter:hover {
-                        background: #f7f7f7;
-                        box-shadow: 0 3px 6px rgba(0,0,0,.2);
-                    }
-
-                    .hiroba-crown-filter:active {
-                        transform: translateY(1px);
-                        box-shadow: 0 1px 2px rgba(0,0,0,.15);
-                    }
+    cursor: pointer;
+}
 
 
-                    /* 件数 */
-                    .hiroba-filter-count {
-                        margin-left: 5px;
+/* 件数 */
+.hiroba-filter-count {
+    margin-left: 2px;
 
-                        color: #999;
-                        font-size: 13px;
-                        font-weight: normal;
-                    }
+    color: #999;
+    font-size: 9px;
+    font-weight: normal;
+
+    white-space: nowrap;
+}
 
 
-                    /* 全良 */
-                    .hiroba-crown-filter[data-crown="donderfull"] {
-                        color: #555;
-                    }
+/* 各ボタン */
+.hiroba-crown-filter[data-crown="donderfull"] {
+    color: #555;
+}
 
-                    /* フルコン */
-                    .hiroba-crown-filter[data-crown="gold"] {
-                        color: #c58b00;
-                    }
+.hiroba-crown-filter[data-crown="gold"] {
+    color: #c58b00;
+}
 
-                    /* クリア */
-                    .hiroba-crown-filter[data-crown="silver"] {
-                        color: #777;
-                    }
+.hiroba-crown-filter[data-crown="silver"] {
+    color: #777;
+}
 
-                    /* ノルマ落ち */
-                    .hiroba-crown-filter[data-crown="played"] {
-                        color: #888;
-                    }
+.hiroba-crown-filter[data-crown="played"] {
+    color: #888;
+}
 
-                    /* 未プレイ */
-                    .hiroba-crown-filter[data-crown="none"] {
-                        color: #999;
-                    }
+.hiroba-crown-filter[data-crown="none"] {
+    color: #999;
+}
+
+
+/* 狭い画面 */
+@media (max-width: 600px) {
+    .hiroba-crown-filter {
+        margin: 1px;
+        padding: 3px 6px;
+        min-height: 24px;
+        font-size: 10px;
+    }
+
+    .hiroba-filter-count {
+        margin-left: 2px;
+        font-size: 8px;
+    }
+}
 
                 </style>
             `);
@@ -275,45 +279,41 @@
             $('head').append(`
                 <style id="hiroba-progress-style">
 
-                    /* 制覇状況のカード */
                     .hiroba-progress {
-                        box-sizing: border-box;
-                        width: calc(100% - 40px);
-                        margin: 12px auto;
-                        padding: 14px 20px;
+    box-sizing: border-box;
+    width: calc(100% - 50px);
 
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        gap: 12px;
+    margin: 6px auto;
+    padding: 7px 12px;
 
-                        background: #ffffff;
-                        border: 2px solid #e0e0e0;
-                        border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
 
-                        color: #333333;
-                        font-size: 22px;
-                        font-weight: bold;
-                        line-height: 1.3;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 
-                        white-space: nowrap;
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.2;
 
-                        box-shadow: 0 2px 5px rgba(0,0,0,0.12);
-                    }
+    white-space: nowrap;
 
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
 
-                    /* 「全良制覇まであと」など */
-                    .hiroba-progress-label {
-                        flex-shrink: 0;
-                    }
+.hiroba-progress-label {
+    flex-shrink: 0;
+}
 
-
-                    /* 「776譜面」など */
-                    .hiroba-progress-count {
-                        flex-shrink: 0;
-                        font-size: 27px;
-                        font-weight: bold;
-                    }
+.hiroba-progress-count {
+    flex-shrink: 0;
+    font-size: 17px;
+    font-weight: bold;
+}
 
 
                     /* ==================================
