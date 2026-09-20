@@ -87,10 +87,13 @@
                     break;
             }
         });
-        let remainingHtml = "<div style='color:#ffffff;margin:10px'>あと" + (countSilver + countPlayed + countNone) + "譜面</div>";
-
+        
+        let remainingHtml = "<div style='color:#ffffff;margin:10px'>おに譜面制覇まであと" + (countGold + countSilver + countPlayed + countNone) + "譜面</div>";
+        let remainingHtml_gold = "<div style='color:#ffffff;margin:10px'>おに譜面フルコン制覇まであと" + (countSilver + countPlayed + countNone) + "譜面</div>";
+        
         $('.tabList').append(remainingHtml);
-
+        $('.tabList').append(remainingHtml_gold);
+        
         function crownFilter(crown){
             $(".contentBox").each(function( index){
                 $(this).show();
