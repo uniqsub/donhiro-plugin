@@ -88,11 +88,153 @@
             }
         });
         
-        let remainingHtml = "<div style='color:#ffffff;margin:10px'>おに譜面制覇まであと" + (countGold + countSilver + countPlayed + countNone) + "譜面</div>";
-        let remainingHtml_gold = "<div style='color:#ffffff;margin:10px'>おに譜面フルコン制覇まであと" + (countSilver + countPlayed + countNone) + "譜面</div>";
-        
-        $('.tabList').append(remainingHtml);
-        $('.tabList').append(remainingHtml_gold);
+        // 制覇状況を見やすく表示
+
+// ・おに譜面フルコン制覇 = 金色
+
+// ・おに譜面制覇 = 虹色
+
+var remainingHtml = `
+
+    <div class="hiroba-progress hiroba-progress-rainbow">
+
+        <span class="hiroba-progress-title">おに譜面制覇</span>
+
+        <span class="hiroba-progress-count">あと ${countGold + countSilver + countPlayed + countNone} 譜面</span>
+
+    </div>`;
+
+var remainingHtml_gold = `
+
+    <div class="hiroba-progress hiroba-progress-gold">
+
+        <span class="hiroba-progress-title">おに譜面フルコン制覇</span>
+
+        <span class="hiroba-progress-count">あと ${countSilver + countPlayed + countNone} 譜面</span>
+
+    </div>`;
+
+// このページだけで使うCSSを追加
+
+if (!document.getElementById('hiroba-progress-style')) {
+
+    $('head').append(`
+
+        <style id="hiroba-progress-style">
+
+            .hiroba-progress {
+
+                margin: 8px 10px;
+
+                padding: 10px 14px;
+
+                border-radius: 8px;
+
+                color: #fff;
+
+                font-weight: bold;
+
+                text-align: center;
+
+                line-height: 1.45;
+
+                text-shadow:
+
+                    0 1px 2px rgba(0,0,0,.8),
+
+                    0 0 4px rgba(0,0,0,.45);
+
+                box-shadow:
+
+                    0 2px 5px rgba(0,0,0,.35),
+
+                    inset 0 1px 0 rgba(255,255,255,.35);
+
+                border: 1px solid rgba(255,255,255,.35);
+
+            }
+
+            .hiroba-progress-title {
+
+                display: block;
+
+                font-size: 14px;
+
+            }
+
+            .hiroba-progress-count {
+
+                display: block;
+
+                margin-top: 2px;
+
+                font-size: 13px;
+
+            }
+
+            /* フルコン制覇：金 */
+
+            .hiroba-progress-gold {
+
+                background:
+
+                    linear-gradient(
+
+                        135deg,
+
+                        #8a5a00 0%,
+
+                        #d99a00 22%,
+
+                        #ffe27a 48%,
+
+                        #d99a00 72%,
+
+                        #8a5a00 100%
+
+                    );
+
+            }
+
+            /* おに譜面制覇：虹 */
+
+            .hiroba-progress-rainbow {
+
+                background:
+
+                    linear-gradient(
+
+                        110deg,
+
+                        #ff3b30 0%,
+
+                        #ff9500 16%,
+
+                        #ffd60a 30%,
+
+                        #34c759 45%,
+
+                        #0a84ff 62%,
+
+                        #5856d6 78%,
+
+                        #af52de 90%,
+
+                        #ff375f 100%
+
+                    );
+
+            }
+
+        </style>
+
+    `);
+
+}
+
+$('.tabList').append(remainingHtml);
+
+$('.tabList').append(remainingHtml_gold);
         
         function crownFilter(crown){
             $(".contentBox").each(function( index){
