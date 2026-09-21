@@ -24,144 +24,14 @@
         var countPlayed = 0;
         var countNone = 0;
 
-        // ========================================
-        // 王冠フィルターボタン
-        // ========================================
-
         var buttonsHtml = "";
-
-        buttonsHtml += `
-            <button class="hiroba-crown-filter"
-                    name="crown_filter"
-                    data-crown="donderfull">
-                <span>全良</span>
-                <span class="hiroba-filter-count" data-count="donderfull"></span>
-            </button>`;
-
-        buttonsHtml += `
-            <button class="hiroba-crown-filter"
-                    name="crown_filter"
-                    data-crown="gold">
-                <span>フルコン</span>
-                <span class="hiroba-filter-count" data-count="gold"></span>
-            </button>`;
-
-        buttonsHtml += `
-            <button class="hiroba-crown-filter"
-                    name="crown_filter"
-                    data-crown="silver">
-                <span>クリア</span>
-                <span class="hiroba-filter-count" data-count="silver"></span>
-            </button>`;
-
-        buttonsHtml += `
-            <button class="hiroba-crown-filter"
-                    name="crown_filter"
-                    data-crown="played">
-                <span>ノルマ落ち</span>
-                <span class="hiroba-filter-count" data-count="played"></span>
-            </button>`;
-
-        buttonsHtml += `
-            <button class="hiroba-crown-filter"
-                    name="crown_filter"
-                    data-crown="none">
-                <span>未プレイ</span>
-                <span class="hiroba-filter-count" data-count="none"></span>
-            </button>`;
+        buttonsHtml += "<button name='crown_filter' data-crown='donderfull'>全良</button>";
+        buttonsHtml += "<button name='crown_filter' data-crown='gold'>フルコン</button>";
+        buttonsHtml += "<button name='crown_filter' data-crown='silver'>クリア</button>";
+        buttonsHtml += "<button name='crown_filter' data-crown='played'>ノルマ落ち</button>";
+        buttonsHtml += "<button name='crown_filter' data-crown='none'>未プレイ</button>";
 
         $('.tabList').append(buttonsHtml);
-
-
-        // ========================================
-        // ボタンのCSS
-        // ========================================
-
-        if (!document.getElementById('hiroba-filter-style')) {
-            $('head').append(`
-                <style id="hiroba-filter-style">
-
-                  .hiroba-crown-filter {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    box-sizing: border-box;
-
-    margin: 1px;
-    padding: 3px 7px;
-
-    min-height: 26px;
-
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 13px;
-
-    color: #555;
-    font-size: 11px;
-    font-weight: bold;
-    line-height: 1.2;
-
-    white-space: nowrap;
-
-    box-shadow: 0 1px 2px rgba(0,0,0,.12);
-
-    cursor: pointer;
-}
-
-
-/* 件数 */
-.hiroba-filter-count {
-    margin-left: 2px;
-
-    color: #999;
-    font-size: 9px;
-    font-weight: normal;
-
-    white-space: nowrap;
-}
-
-
-/* 各ボタン */
-.hiroba-crown-filter[data-crown="donderfull"] {
-    color: #555;
-}
-
-.hiroba-crown-filter[data-crown="gold"] {
-    color: #c58b00;
-}
-
-.hiroba-crown-filter[data-crown="silver"] {
-    color: #777;
-}
-
-.hiroba-crown-filter[data-crown="played"] {
-    color: #888;
-}
-
-.hiroba-crown-filter[data-crown="none"] {
-    color: #999;
-}
-
-
-/* 狭い画面 */
-@media (max-width: 600px) {
-    .hiroba-crown-filter {
-        margin: 1px;
-        padding: 3px 6px;
-        min-height: 24px;
-        font-size: 10px;
-    }
-
-    .hiroba-filter-count {
-        margin-left: 2px;
-        font-size: 8px;
-    }
-}
-
-                </style>
-            `);
-        }
 
         $('[name="crown_filter"]').click(function(){
             crownFilter($(this).data('crown'));
@@ -198,48 +68,37 @@
             crownList.push({'songName':songNameList[index],'crown':crownStatus});
         });
 
-        // ========================================
-        // 王冠フィルターの件数を表示
-        // ========================================
-
-        $('.hiroba-filter-count').each(function() {
-            var crown = $(this).data('count');
-            var count = 0;
-
-            switch (crown) {
+        $( '[name="crown_filter"]' ).each(function( index ) {
+            switch($(this).data('crown')){
                 case "donderfull":
-                    count = countDonderFull;
+                    $(this).append('('+ countDonderFull + ')');
                     break;
-
                 case "gold":
-                    count = countGold;
+                    $(this).append('('+ countGold + ')');
                     break;
-
                 case "silver":
-                    count = countSilver;
+                    $(this).append('('+ countSilver + ')');
                     break;
-
                 case "played":
-                    count = countPlayed;
+                    $(this).append('('+ countPlayed + ')');
                     break;
-
                 case "none":
-                    count = countNone;
+                    $(this).append('('+ countNone + ')');
                     break;
             }
-
-            $(this).text('(' + count + ')');
         });
         
-        // ========================================
+                // ========================================
         // 制覇までの残り譜面数
         // ========================================
 
-        // 全良制覇まであと
+        // 全良制覇までの残り
+        // = フルコン + クリア + ノルマ落ち + 未プレイ
         var remainingDonderFull =
             countGold + countSilver + countPlayed + countNone;
 
-        // フルコン制覇まであと
+        // フルコン制覇までの残り
+        // = クリア + ノルマ落ち + 未プレイ
         var remainingFullCombo =
             countSilver + countPlayed + countNone;
 
@@ -249,26 +108,20 @@
         // ========================================
 
         var remainingHtml = `
-            <div class="hiroba-progress hiroba-progress-rainbow-box">
-                <span class="hiroba-progress-label">
-                    全良制覇まであと
-                </span>
-                <span class="hiroba-progress-count hiroba-rainbow">
+            <div class="hiroba-progress">
+                おに譜面制覇まであと
+                <span class="hiroba-count hiroba-rainbow">
                     ${remainingDonderFull}譜面
                 </span>
-            </div>
-        `;
+            </div>`;
 
         var remainingHtml_gold = `
             <div class="hiroba-progress">
-                <span class="hiroba-progress-label">
-                    フルコン制覇まであと
-                </span>
-                <span class="hiroba-progress-count hiroba-gold">
+                おに譜面フルコン制覇まであと
+                <span class="hiroba-count hiroba-gold">
                     ${remainingFullCombo}譜面
                 </span>
-            </div>
-        `;
+            </div>`;
 
 
         // ========================================
@@ -280,57 +133,38 @@
                 <style id="hiroba-progress-style">
 
                     .hiroba-progress {
-    box-sizing: border-box;
-    width: calc(100% - 50px);
+                        margin: 8px 10px;
+                        padding: 8px 12px;
+                        background: #fff;
+                        color: #333;
+                        font-weight: bold;
+                        font-size: 14px;
+                        line-height: 1.5;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                    }
 
-    margin: 6px auto;
-    padding: 7px 12px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-
-    color: #333;
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 1.2;
-
-    white-space: nowrap;
-
-    box-shadow: 0 1px 3px rgba(0,0,0,.1);
-}
-
-.hiroba-progress-label {
-    flex-shrink: 0;
-}
-
-.hiroba-progress-count {
-    flex-shrink: 0;
-    font-size: 17px;
-    font-weight: bold;
-}
+                    .hiroba-count {
+                        margin-left: 4px;
+                        font-weight: bold;
+                    }
 
 
                     /* ==================================
-                       全良制覇：流れる虹色
+                       おに譜面制覇：流れる虹色
                        ================================== */
 
                     .hiroba-rainbow {
                         background: linear-gradient(
                             90deg,
-                            #ff3b30 0%,
-                            #ff9500 14%,
-                            #ffd60a 28%,
-                            #34c759 42%,
-                            #00a8ff 56%,
-                            #5856d6 70%,
-                            #af52de 84%,
-                            #ff3b30 100%
+                            #ff3b30,
+                            #ff9500,
+                            #ffd60a,
+                            #34c759,
+                            #0a84ff,
+                            #5856d6,
+                            #af52de,
+                            #ff3b30
                         );
 
                         background-size: 300% 100%;
@@ -358,29 +192,11 @@
 
 
                     /* ==================================
-                       フルコン制覇：金色
+                       おに譜面フルコン制覇：金色
                        ================================== */
 
                     .hiroba-gold {
                         color: #d49a00;
-                    }
-
-
-                    /* ==================================
-                       スマホなど画面が狭い場合
-                       ================================== */
-
-                    @media (max-width: 600px) {
-                        .hiroba-progress {
-                            width: calc(100% - 30px);
-                            padding: 12px 10px;
-                            gap: 8px;
-                            font-size: 18px;
-                        }
-
-                        .hiroba-progress-count {
-                            font-size: 22px;
-                        }
                     }
 
                 </style>
@@ -389,7 +205,7 @@
 
 
         // ========================================
-        // 表示
+        // tabListに追加
         // ========================================
 
         $('.tabList').append(remainingHtml);
