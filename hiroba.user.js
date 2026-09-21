@@ -109,7 +109,7 @@
 
         var remainingHtml = `
             <div class="hiroba-progress">
-                おに譜面制覇まであと
+                制覇まであと
                 <span class="hiroba-count hiroba-rainbow">
                     ${remainingDonderFull}譜面
                 </span>
@@ -117,7 +117,7 @@
 
         var remainingHtml_gold = `
             <div class="hiroba-progress">
-                おに譜面フルコン制覇まであと
+                フルコン制覇まであと
                 <span class="hiroba-count hiroba-gold">
                     ${remainingFullCombo}譜面
                 </span>
